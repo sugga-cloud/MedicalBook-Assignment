@@ -3,6 +3,7 @@
 <head>
     @include('admin.includes.head')
     @yield('css')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     {{--<div class="preloader">--}}

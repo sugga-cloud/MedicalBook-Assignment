@@ -92,6 +92,10 @@ Route::group(['middleware' => 'auth'], function (){
 //    Route::post('leave/pending/{id}',        [ 'as'=>'leave.pending',        'uses' => 'LeaveController@pending']);
 //    Route::post('leave/reject/{id}',        [ 'as'=>'leave.reject',        'uses' => 'LeaveController@reject']);
 
+
+// My Edit route for getting user leave number along with month
+    Route::get('total-leave/count',['as' => 'total-leave.count','uses' => 'LeaveController@leaveDetails']);
+    Route::get('total-leave/count/{username}',['as' => 'total-leave.count','uses' => 'LeaveController@leaveDetailsByUsername']);
     Route::get('total-leave',               [ 'as'=>'total-leave',              'uses' => 'TotalLeaveController@index']);
     Route::get('total-leave/create',        [ 'as'=>'total-leave.create',       'uses' => 'TotalLeaveController@create']);
     Route::post('total-leave/store',        [ 'as'=>'total-leave.store',        'uses' => 'TotalLeaveController@store']);

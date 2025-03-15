@@ -29,6 +29,59 @@ class LeaveController extends Controller
         return view('admin.leave.index',compact('leaves','user'));
     }
 
+    public function leaveDetails(){
+        $user = Auth::user();
+        if (Auth::user()->role == 'admin') {
+            $leaves = Leave::selectRaw('MONTH(date_from) as month, COUNT(*) as count')
+                ->groupBy('month')
+                ->orderBy('month')
+                ->get();
+        
+            // Convert numeric months to names
+            $months = [];
+            $numbers = [];
+        
+            foreach ($leaves as $leave) {
+                $months[] = date('F', mktime(0, 0, 0, $leave->month, 1)); // Convert month number to name
+                $numbers[] = $leave->count;
+            }
+        
+            $result = [
+                'number' => $numbers,
+                'months' => $months
+            ];
+        
+            return response()->json($result);
+        }
+    }
+
+    public function leaveDetailsByUsername($username){
+        $user = Auth::user();
+        if (Auth::user()->role == 'admin' || Auth::user()->role == 'employee') {
+            $leaves = Leave::selectRaw("MONTH(date_from) as month, COUNT(*) as count")
+                ->join("users", "users.id", "=", "leaves.employee_id") 
+                ->where("users.username","=",$username)
+                ->groupBy('month')
+                ->orderBy('month')
+                ->get();
+        
+            // Convert numeric months to names
+            $months = [];
+            $numbers = [];
+        
+            foreach ($leaves as $leave) {
+                $months[] = date('F', mktime(0, 0, 0, $leave->month, 1)); // Convert month number to name
+                $numbers[] = $leave->count;
+            }
+        
+            $result = [
+                'number' => $numbers,
+                'months' => $months
+            ];
+        
+            return response()->json($result);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
