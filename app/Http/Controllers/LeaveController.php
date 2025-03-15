@@ -29,6 +29,7 @@ class LeaveController extends Controller
         return view('admin.leave.index',compact('leaves','user'));
     }
 
+// My Edit
     public function leaveDetails(){
         $user = Auth::user();
         if (Auth::user()->role == 'admin') {
@@ -82,7 +83,10 @@ class LeaveController extends Controller
             return response()->json($result);
         }
     }
-    /**
+
+//End
+
+/**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

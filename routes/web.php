@@ -96,6 +96,8 @@ Route::group(['middleware' => 'auth'], function (){
 // My Edit route for getting user leave number along with month
     Route::get('total-leave/count',['as' => 'total-leave.count','uses' => 'LeaveController@leaveDetails']);
     Route::get('total-leave/count/{username}',['as' => 'total-leave.count','uses' => 'LeaveController@leaveDetailsByUsername']);
+// End   
+  
     Route::get('total-leave',               [ 'as'=>'total-leave',              'uses' => 'TotalLeaveController@index']);
     Route::get('total-leave/create',        [ 'as'=>'total-leave.create',       'uses' => 'TotalLeaveController@create']);
     Route::post('total-leave/store',        [ 'as'=>'total-leave.store',        'uses' => 'TotalLeaveController@store']);

@@ -50,6 +50,13 @@
                 </div>
                 <div class="bg-white p-2  mb-4"  style="width: 80%; max-width: 600px; height: 400px;">
                     <h4 class="page-title p-3">Leave Chart</h4>
+                 <select class="form-select p-3" onchange="handleChart(this.value)">
+    <option value="all" selected>All Employees</option>
+    @foreach ($leaves as $leave)
+        <option value="{{ $leave->users->username }}">{{ $leave->users->username }}</option>
+    @endforeach
+</select>
+
 
                     <canvas id="chart"></canvas>
 
@@ -83,7 +90,7 @@
                                             @foreach ($leaves as $leave)
                                                 <tr>
                                                     <td>{{ $loop->index + 1 }}</td>
-                                                    <td onclick="handleChart(innerHTML)">{{ $leave->users->username }}</td>
+                                                    <td onclick="handleChart(innerHTML)" style="cursor:pointer">{{ $leave->users->username }}</td>
                                                     <td>{{ $leave->leave_type }}</td>
                                                     <td>{{ $leave->date_from }}</td>
                                                     <td>{{ $leave->date_to }}</td>
@@ -251,6 +258,11 @@
             handleChart("{{ Auth::user()->username }}"); // Wrapped username in quotes
         @endif
         async function handleChart(username) {
+        if(username=="all"){
+            getData();
+            return;
+
+        }
             const response = await fetch('http://localhost:8000/total-leave/count/' + username, {
                 method: 'GET'
             });
